@@ -1,0 +1,145 @@
+
+<style>
+
+    .infinite_carrousel{
+        width: 100%;
+        overflow: hidden;
+    }
+    .carrousel_container{
+        display: flex;
+        overflow: auto;
+    }
+    .ic_element{
+        min-width: 15vw;
+        padding-right: 3vw;
+    }
+    .ic_element img{
+        width: 100%;
+    }
+
+</style>
+                <div class="infinite_carrousel infiniteCarrousel">
+                    <div class="carrouselContainer carrousel_container">
+                        <div class="ic_element">                            
+                            <img 
+                                class="lazy"
+                                data-srcset="{% static  'images/logos_empresas/century-21.png' %} 768w, {% static 'images/logos_empresas/century-21.png' %}" 
+                                data-src="{% static 'images/logos_empresas/century-21.png' %}" 
+                                src="{% static 'images/logos_empresas/century-21.png' %}" 
+                                alt="Century 21">
+                        </div>
+                        <div class="ic_element">           
+                            <img 
+                                class="lazy"
+                                data-srcset="{% static  'images/logos_empresas/logo-depas-peru.png' %} 768w, {% static 'images/logos_empresas/logo-depas-peru.png' %}" 
+                                data-src="{% static 'images/logos_empresas/logo-depas-peru.png' %}" 
+                                src="{% static 'images/logos_empresas/logo-depas-peru.png' %}" 
+                                alt="Century 21">
+                        </div>
+                        <div class="ic_element">           
+                            <img 
+                                class="lazy"
+                                data-srcset="{% static  'images/logos_empresas/capital-broker.png' %} 768w, {% static 'images/logos_empresas/capital-broker.png' %}" 
+                                data-src="{% static 'images/logos_empresas/capital-broker.png' %}" 
+                                src="{% static 'images/logos_empresas/capital-broker.png' %}" 
+                                alt="Century 21">
+                        </div>
+                        <div class="ic_element">         
+                            <img 
+                                class="lazy"
+                                data-srcset="{% static  'images/logos_empresas/depas-peru.png' %} 768w, {% static 'images/logos_empresas/depas-peru.png' %}" 
+                                data-src="{% static 'images/logos_empresas/depas-peru.png' %}" 
+                                src="{% static 'images/logos_empresas/depas-peru.png' %}" 
+                                alt="Century 21">
+                        </div>
+                        <div class="ic_element">   
+                            <img 
+                                class="lazy"
+                                data-srcset="{% static  'images/logos_empresas/royas-broker.png' %} 768w, {% static 'images/logos_empresas/royas-broker.png' %}" 
+                                data-src="{% static 'images/logos_empresas/royas-broker.png' %}" 
+                                src="{% static 'images/logos_empresas/royas-broker.png' %}" 
+                                alt="Century 21">
+                        </div>
+                        <div class="ic_element">    
+                            <img 
+                                class="lazy"
+                                data-srcset="{% static  'images/logos_empresas/m2Lima-real-state.png' %} 768w, {% static 'images/logos_empresas/m2Lima-real-state.png' %}" 
+                                data-src="{% static 'images/logos_empresas/m2Lima-real-state.png' %}" 
+                                src="{% static 'images/logos_empresas/m2Lima-real-state.png' %}" 
+                                alt="Century 21">
+                        </div>
+                        <div class="ic_element">   
+                            <img 
+                                class="lazy"
+                                data-srcset="{% static  'images/logos_empresas/logo-mudesi.png' %} 768w, {% static 'images/logos_empresas/logo-mudesi.png' %}" 
+                                data-src="{% static 'images/logos_empresas/logo-mudesi.png' %}" 
+                                src="{% static 'images/logos_empresas/logo-mudesi.png' %}" 
+                                alt="Century 21">
+                        </div>
+                        <div class="ic_element">     
+                            <img 
+                                class="lazy"
+                                data-srcset="{% static  'images/logos_empresas/de-las-casas.png' %} 768w, {% static 'images/logos_empresas/de-las-casas.png' %}" 
+                                data-src="{% static 'images/logos_empresas/de-las-casas.png' %}" 
+                                src="{% static 'images/logos_empresas/de-las-casas.png' %}" 
+                                alt="Century 21">
+                        </div>
+                        <div class="ic_element">       
+                            <img 
+                                class="lazy"
+                                data-srcset="{% static  'images/logos_empresas/de-las-casas.png' %} 768w, {% static 'images/logos_empresas/de-las-casas.png' %}" 
+                                data-src="{% static 'images/logos_empresas/de-las-casas.png' %}" 
+                                src="{% static 'images/logos_empresas/de-las-casas.png' %}" 
+                                alt="Century 21">
+                        </div>
+                    </div>
+                </div>
+<script>
+    class infiniteCarrousel{
+        constructor(element, props){
+            this.carrouselParent = document.querySelector(element);
+            this.carrousel = this.carrouselParent.querySelector('.carrouselContainer'); 
+            this.speed = 10;
+            this.readProps(props);
+            this.initilize();
+        }
+        readProps(props){            
+            const defaultProperties = {
+                multipleCheckbox : document.querySelectorAll('.generalMainCheckbox'),
+            }
+
+            for (const key in props) {
+                defaultProperties[key] = props[key];
+            }
+
+            for (const key in defaultProperties) {
+                this[key] = defaultProperties[key];
+            }
+        }
+        initilize(){
+            setInterval(()=>{
+                this.carrousel.scroll(this.carrousel.scrollLeft+1, 0);
+            }, this.speed);
+
+            //to hide scrollbar
+            this.carrousel.classList.add('no_scrollbar');
+
+            this.carrousel.addEventListener('scroll',  this.checkScroll);
+        }
+        checkScroll(e){
+            const carrouselPosition = e.target.getBoundingClientRect().left,
+                  firstElement = e.target.querySelector('.ic_element:first-child'),
+                  firstElementPosition = firstElement.getBoundingClientRect().left;
+
+            const calculate = carrouselPosition - (firstElement.clientWidth);
+
+            if(firstElementPosition < calculate){
+                e.target.appendChild(firstElement);
+                e.target.scroll(0, 0);
+            }
+        }
+    }
+
+
+    new infiniteCarrousel('.infiniteCarrousel', {});
+    </script>
